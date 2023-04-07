@@ -7,7 +7,7 @@ export default function Input({ placeholder, type }) {
 const Screen = styled.input`
   padding: 10px;
   height: 40px;
-  width: 400px;
+  width: 100%;
   border-radius: 15px;
   border: 1px solid gray;
   box-shadow: 0px 0px 1.5px black;

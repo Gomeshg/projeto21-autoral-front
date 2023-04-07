@@ -7,7 +7,7 @@ export default function ButtonRegister({ name, onClick }) {
 const Screen = styled.button`
   padding: 10px;
   height: 40px;
-  width: 400px;
+  width: 100%;
   border-radius: 15px;
   background-color: black;
   color: white;

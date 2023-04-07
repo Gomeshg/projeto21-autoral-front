@@ -4,17 +4,13 @@ import Input from "../components/Input";
 import ButtonRegister from "../components/Button-register";
 
 export default function SignIn() {
-  function clique() {
-    alert("Click!");
-  }
-
   return (
     <Screen>
       <Icon />
       <BoxInput>
         <Input placeholder="E-mail" type="email" />
         <Input placeholder="Senha" type="password" />
-        <ButtonRegister onClick={clique} name="Login" />
+        <ButtonRegister name="Login" />
       </BoxInput>
     </Screen>
   );
@@ -30,6 +26,7 @@ const Screen = styled.div`
 const BoxInput = styled.div`
   display: flex;
   flex-direction: column;
+  width: 80%;
 
   gap: 10px;
 `;
