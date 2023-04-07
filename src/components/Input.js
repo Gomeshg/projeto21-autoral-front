@@ -1,7 +1,16 @@
 import styled from "styled-components";
 
-export default function Input({ placeholder, type }) {
-  return <Screen placeholder={placeholder} type={type}></Screen>;
+export default function Input({ placeholder, type, setValue, value }) {
+  return (
+    <Screen
+      placeholder={placeholder}
+      type={type}
+      value={value}
+      onChange={(e) => {
+        setValue(e.target.value);
+      }}
+    ></Screen>
+  );
 }
 
 const Screen = styled.input`
