@@ -14,8 +14,14 @@ const Screen = styled.button`
   font-weight: bold;
   cursor: pointer;
 
+  transition: all 1.5s ease 0s;
+
   &:hover {
     color: rgb(220, 220, 220);
     box-shadow: 0px 0px 3.8px black;
+  }
+
+  @media (min-width: 480px) {
+    font-size: 18px;
   }
 `;

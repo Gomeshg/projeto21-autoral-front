@@ -8,7 +8,7 @@ const GlobalStyle = createGlobalStyle`
     line-height: none;
     border: none;
     outline: none;
-
+    font-size: 16px;
     background-color: rgb(255, 255, 255);
   }
  

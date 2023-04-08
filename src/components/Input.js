@@ -24,12 +24,12 @@ const Screen = styled.input`
   transition: all 1.5s ease 0s;
 
   &::placeholder {
-    text-align: center;
+    text-align: start;
     color: rgba(0, 0, 0, 0.3);
     font-style: italic;
   }
   &:focus {
-    border-bottom: 1px solid rgb(150, 150, 150);
+    border-bottom: 1px solid rgb(0, 0, 0);
   }
   &:-webkit-autofill {
     background-color: white !important;

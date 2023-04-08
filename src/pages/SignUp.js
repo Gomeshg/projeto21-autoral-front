@@ -2,9 +2,9 @@ import styled from "styled-components";
 import Icon from "../components/Icon";
 import Input from "../components/Input";
 import Button from "../components/Button";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { signUp } from "../services/userAPI";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -66,6 +66,7 @@ export default function SignUp() {
         />
         <Button submit="submit" name="Cadastrar-se" />
       </BoxInput>
+      <Link to="/sign-in">Já possui uma conta?</Link>
       <ToastContainer />
     </Screen>
   );
@@ -76,6 +77,7 @@ const Screen = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 10px;
 `;
 
 const BoxInput = styled.form`
@@ -91,7 +93,7 @@ const BoxInput = styled.form`
     width: 400px;
 
     input {
-      font-size: 22px;
+      font-size: 20px;
     }
   }
 `;

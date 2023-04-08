@@ -5,7 +5,7 @@ import Button from "../components/Button";
 import { useState } from "react";
 import { useSession } from "../services/session";
 import { signIn } from "../services/userAPI";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -58,9 +58,10 @@ export default function SignIn() {
           setValue={setPassword}
           value={password}
         />
-        <Button submit="submit" name="Login" />
+        <Button submit="submit" name="Entrar" />
       </BoxInput>
       <ToastContainer />
+      <Link to="/">Não possui uma conta?</Link>
     </Screen>
   );
 }
@@ -70,6 +71,7 @@ const Screen = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 10px;
 `;
 
 const BoxInput = styled.form`
