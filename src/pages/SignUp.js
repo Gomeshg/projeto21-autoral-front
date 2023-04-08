@@ -1,29 +1,43 @@
 import styled from "styled-components";
 import Icon from "../components/Icon";
 import Input from "../components/Input";
-import ButtonRegister from "../components/Button-sign";
+import Button from "../components/Button";
 import { useState } from "react";
-import { signUp } from "../services/userAPI";
+// import { signUp } from "../services/userAPI";
+import { useNavigate } from "react-router-dom";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function SignUp() {
+  const navigate = useNavigate();
+
   const [name, setName] = useState(null);
   const [numberPhone, setNumberPhone] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
 
-  function signUp(e) {
-    e.preventDefault();
-    // signUp(email, password, name, numberPhone).then(res => {
+  function signUp() {
+    const body = {
+      email,
+      password,
+      name,
+      numberPhone,
+    };
 
-    // }).catch(e => {
-
-    // })
-    console.log(process.env.REACT_APP_API_BASE_URL);
+    // signUp(body)
+    //   .then((res) => {
+    //     toast.success("Cadastro realizado com sucesso!");
+    //     navigate("/sign-in");
+    //   })
+    //   .catch((e) => {
+    //     toast.error("Erro no cadastro");
+    //   });
   }
   return (
     <Screen>
       <Icon />
-      <BoxInput onSubmit={signUp}>
+      <BoxInput>
         <Input placeholder="Nome" type="text" setValue={setName} value={name} />
         <Input
           placeholder="Celular"
@@ -43,8 +57,9 @@ export default function SignUp() {
           setValue={setPassword}
           value={password}
         />
-        <ButtonRegister name="Cadastrar-se" />
+        <Button onClick={signUp} name="Cadastrar-se" />
       </BoxInput>
+      <ToastContainer theme="dark" />
     </Screen>
   );
 }
@@ -60,6 +75,16 @@ const BoxInput = styled.form`
   display: flex;
   flex-direction: column;
 
-  width: 80%;
   gap: 10px;
+  width: 80%;
+
+  transition: all 1.5s ease 0s;
+
+  @media (min-width: 480px) {
+    width: 400px;
+
+    input {
+      font-size: 22px;
+    }
+  }
 `;
