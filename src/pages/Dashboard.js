@@ -1,8 +1,15 @@
 import styled from "styled-components";
 import { useSession } from "../services/session";
+import Header from "../components/Header";
 
 export default function Dashboard() {
   const { session } = useSession();
 
-  return <h1>Token: {session.token}</h1>;
+  return (
+    <Screen>
+      <Header />
+    </Screen>
+  );
 }
+
+const Screen = styled.div``;
