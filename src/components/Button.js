@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-export default function Button({ onClick, name }) {
-  return <Screen onClick={onClick}>{name}</Screen>;
+export default function Button({ submit, name }) {
+  return <Screen submit={submit}>{name}</Screen>;
 }
 
 const Screen = styled.button`

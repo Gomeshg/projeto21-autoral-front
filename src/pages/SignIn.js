@@ -1,27 +1,51 @@
 import styled from "styled-components";
 import Icon from "../components/Icon";
 import Input from "../components/Input";
-import ButtonRegister from "../components/Button";
+import Button from "../components/Button";
 import { useState } from "react";
 import { useSession } from "../services/session";
+import { signIn } from "../services/userAPI";
+import { useNavigate } from "react-router-dom";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function SignIn() {
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const { setSession } = useSession();
+  const navigate = useNavigate();
 
-  function signIn(e) {
+  function login(e) {
     e.preventDefault();
 
-    // const session = {};
-    // setSession(session);
-    // localStorage.setItem("session", JSON.stringify(session));
+    if (email === "" || password === "") {
+      return toast.error("Preencha os campos!");
+    }
+    const body = {
+      email,
+      password,
+    };
+    signIn(body)
+      .then((res) => {
+        const session = {
+          token: res.data.token,
+        };
+        setSession(session);
+        localStorage.setItem("session", JSON.stringify(session));
+        console.log(session);
+        toast.success("Login realizado com sucesso!");
+        navigate("/dashboard");
+      })
+      .catch((err) => {
+        toast.error("Erro no login!");
+      });
   }
 
   return (
     <Screen>
       <Icon />
-      <BoxInput onSubmit={signIn}>
+      <BoxInput onSubmit={login} autoComplete="off">
         <Input
           placeholder="E-mail"
           type="email"
@@ -34,8 +58,9 @@ export default function SignIn() {
           setValue={setPassword}
           value={password}
         />
-        <ButtonRegister name="Login" />
+        <Button submit="submit" name="Login" />
       </BoxInput>
+      <ToastContainer />
     </Screen>
   );
 }
@@ -53,4 +78,14 @@ const BoxInput = styled.form`
   width: 80%;
 
   gap: 10px;
+
+  transition: all 1.5s ease 0s;
+
+  @media (min-width: 480px) {
+    width: 400px;
+
+    input {
+      font-size: 22px;
+    }
+  }
 `;

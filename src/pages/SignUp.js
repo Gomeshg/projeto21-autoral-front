@@ -2,8 +2,8 @@ import styled from "styled-components";
 import Icon from "../components/Icon";
 import Input from "../components/Input";
 import Button from "../components/Button";
-import { useState } from "react";
-// import { signUp } from "../services/userAPI";
+import { useEffect, useState } from "react";
+import { signUp } from "../services/userAPI";
 import { useNavigate } from "react-router-dom";
 
 import { ToastContainer, toast } from "react-toastify";
@@ -12,12 +12,18 @@ import "react-toastify/dist/ReactToastify.css";
 export default function SignUp() {
   const navigate = useNavigate();
 
-  const [name, setName] = useState(null);
-  const [numberPhone, setNumberPhone] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [name, setName] = useState("");
+  const [numberPhone, setNumberPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  function signUp() {
+  function register(e) {
+    e.preventDefault();
+
+    if (name === "" || numberPhone === "" || email === "" || password === "") {
+      return toast.error("Preencha os campos!");
+    }
+
     const body = {
       email,
       password,
@@ -25,23 +31,24 @@ export default function SignUp() {
       numberPhone,
     };
 
-    // signUp(body)
-    //   .then((res) => {
-    //     toast.success("Cadastro realizado com sucesso!");
-    //     navigate("/sign-in");
-    //   })
-    //   .catch((e) => {
-    //     toast.error("Erro no cadastro");
-    //   });
+    signUp(body)
+      .then((res) => {
+        navigate("/sign-in");
+        toast.success("Cadastro realizado com sucesso!");
+      })
+      .catch((e) => {
+        toast.error("Erro no cadastro");
+      });
   }
+
   return (
     <Screen>
       <Icon />
-      <BoxInput>
+      <BoxInput onSubmit={register} autoComplete="off">
         <Input placeholder="Nome" type="text" setValue={setName} value={name} />
         <Input
           placeholder="Celular"
-          type="text"
+          type="number"
           setValue={setNumberPhone}
           value={numberPhone}
         />
@@ -57,9 +64,9 @@ export default function SignUp() {
           setValue={setPassword}
           value={password}
         />
-        <Button onClick={signUp} name="Cadastrar-se" />
+        <Button submit="submit" name="Cadastrar-se" />
       </BoxInput>
-      <ToastContainer theme="dark" />
+      <ToastContainer />
     </Screen>
   );
 }

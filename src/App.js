@@ -4,7 +4,7 @@ import React from "react";
 
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
-import Line from "./pages/Dashboard";
+import Dashboard from "./pages/Dashboard";
 
 export default function App() {
   // LOGIC
@@ -16,7 +16,7 @@ export default function App() {
         <Routes>
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/" element={<SignUp />} />
-          <Route path="/line" element={<Line />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </BrowserRouter>
     </>
