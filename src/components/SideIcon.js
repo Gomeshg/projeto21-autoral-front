@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import icon from "../assets/sideicon.png";
+import icon from "../assets/images/sideicon.png";
 export default function SideIcon() {
   return <Screen src={icon}></Screen>;
 }

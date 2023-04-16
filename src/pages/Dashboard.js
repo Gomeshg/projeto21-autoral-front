@@ -1,11 +1,16 @@
 import styled from "styled-components";
-import { useSession } from "../services/session";
+// import { useSession } from "../services/session";
 import Header from "../components/Header";
 import Line from "../components/Line";
 import { IoCalendar } from "react-icons/io5";
-
+import { useState } from "react";
 export default function Dashboard() {
-  const { session } = useSession();
+  // const { session } = useSession();
+  const [date, setData] = useState(null);
+  function handleDateInput(e) {
+    const input = e.target.value;
+    setData(input);
+  }
 
   return (
     <Screen>
@@ -13,7 +18,9 @@ export default function Dashboard() {
       <LineContainer>
         <Head>
           <Title>Today</Title>
+
           <IoCalendar className="Icon" size="40px" />
+          <input type="date" onChange={handleDateInput} />
         </Head>
         <Line />
       </LineContainer>
@@ -37,8 +44,6 @@ const LineContainer = styled.div`
   width: 100%;
   border-radius: 15px;
 
-  /* background-color: green; */
-
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -53,6 +58,18 @@ const Head = styled.div`
   display: flex;
   justify-content: space-between;
   width: 80%;
+
+  position: relative;
+
+  input {
+    width: 35px;
+    height: 35px;
+    background-color: yellow;
+    opacity: 0;
+    position: absolute;
+    top: 0px;
+    right: 3px;
+  }
 `;
 
 const Title = styled.h2`

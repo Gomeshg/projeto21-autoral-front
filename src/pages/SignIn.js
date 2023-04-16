@@ -30,6 +30,7 @@ export default function SignIn() {
       .then((res) => {
         const session = {
           token: res.data.token,
+          userId: res.data.userId,
         };
         setSession(session);
         localStorage.setItem("session", JSON.stringify(session));

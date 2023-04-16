@@ -10,9 +10,4 @@ const Screen = styled.div`
   background-color: rgb(210, 210, 210);
   border-radius: 15px;
   overflow: scroll;
-
-  ion-icon {
-    width: 40px;
-    height: 40px;
-  }
 `;

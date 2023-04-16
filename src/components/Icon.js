@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import icon from "../assets/fasterbarber2.png";
+import icon from "../assets/images/fasterbarber2.png";
 export default function Icon() {
   return <Screen src={icon}></Screen>;
 }
