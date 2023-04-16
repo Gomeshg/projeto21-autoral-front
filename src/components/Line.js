@@ -1,5 +1,18 @@
 import styled from "styled-components";
 
-export function Line() {
-  return <h1>Line</h1>;
+export default function Line() {
+  return <Screen></Screen>;
 }
+
+const Screen = styled.div`
+  height: 70vh;
+  width: 80%;
+  background-color: rgb(210, 210, 210);
+  border-radius: 15px;
+  overflow: scroll;
+
+  ion-icon {
+    width: 40px;
+    height: 40px;
+  }
+`;

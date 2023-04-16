@@ -33,12 +33,11 @@ export default function SignIn() {
         };
         setSession(session);
         localStorage.setItem("session", JSON.stringify(session));
-        console.log(session);
         toast.success("Login realizado com sucesso!");
         navigate("/dashboard");
       })
       .catch((err) => {
-        toast.error("Erro no login!");
+        toast.error("Login inválido!");
       });
   }
 

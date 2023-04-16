@@ -15,6 +15,9 @@ export default function Header() {
 const Screen = styled.div`
   height: 100px;
   width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
 `;
 
 const Wrapper = styled.div`
@@ -22,19 +25,23 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   background-color: black;
+  box-shadow: 0px 0px 20px black;
 `;
 
 const Title = styled.h1`
-  font-size: 30px;
   color: white;
-  font-family: "Bungee Shade", cursive;
+  font-family: "Bungee Shade", sans-serif;
   background-color: black;
   align-self: center;
 
-  @media (max-width: 420px) {
-    font-size: 25px;
+  @media (min-width: 0px) and (max-width: 400px) {
+    font-size: 20px;
   }
-  @media (max-width: 370px) {
-    font-size: 22px;
+  @media (min-width: 401px) and (max-width: 1240px) {
+    font-size: 28px;
+  }
+
+  @media (min-width: 1241px) {
+    font-size: 40px;
   }
 `;
