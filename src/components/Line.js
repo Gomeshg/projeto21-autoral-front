@@ -1,7 +1,13 @@
 import styled from "styled-components";
+import { getLine, postLine, putLine, deleteLine } from "../services/lineAPI";
+import LineButton from "./LineButton";
 
 export default function Line() {
-  return <Screen></Screen>;
+  return (
+    <Screen>
+      <LineButton />
+    </Screen>
+  );
 }
 
 const Screen = styled.div`

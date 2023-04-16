@@ -9,7 +9,6 @@ const GlobalStyle = createGlobalStyle`
     border: none;
     outline: none;
     font-size: 16px;
-    background-color: rgb(255, 255, 255);
     word-wrap: break-word;
   }
  
