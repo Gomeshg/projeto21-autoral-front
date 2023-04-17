@@ -1,24 +1,31 @@
 import styled from "styled-components";
 import { IoCalendar } from "react-icons/io5";
+import { getLine } from "../services/lineAPI";
+import { useSession } from "../services/session";
 
-export default function Head({ value, setValue }) {
+export default function Head({ date, setDate }) {
+  const { session } = useSession();
+
   function handleInput(e) {
-    setValue(e.target.value);
+    setDate(e.target.value);
   }
 
   return (
     <Wrapper>
-      <Title>{value ? value : "Today"}</Title>
-      <IoCalendar size="40px" />
-      <Input type="date" onChange={handleInput} />
+      <div></div>
+      <Title>{date ? date : "Today"}</Title>
+      <BoxInput>
+        <IoCalendar className="icon" size="35px" />
+        <Input type="date" onChange={handleInput} />
+      </BoxInput>
     </Wrapper>
   );
 }
 
 const Wrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 80%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
 
   position: relative;
 `;
@@ -27,8 +34,20 @@ const Title = styled.h2`
   font-size: 25px;
   font-weight: bold;
 
-  width: 55%;
-  text-align: end;
+  text-align: center;
+`;
+
+const BoxInput = styled.div`
+  display: flex;
+  justify-content: end;
+  transition: all 0.5s ease-out;
+
+  &:active {
+    .icon {
+      transition: all 0.1s ease-out;
+      transform: translateX(-1px);
+    }
+  }
 `;
 
 const Input = styled.input`
