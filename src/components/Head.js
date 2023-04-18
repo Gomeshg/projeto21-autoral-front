@@ -1,13 +1,23 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { IoCalendar } from "react-icons/io5";
 import { getLine } from "../services/lineAPI";
 import { useSession } from "../services/session";
+import { useState } from "react";
 
 export default function Head({ date, setDate }) {
   const { session } = useSession();
+  const [clickCalendar, setClickCalendar] = useState(false);
 
   function handleInput(e) {
     setDate(e.target.value);
+  }
+
+  function shakeCalendar() {
+    setClickCalendar(true);
+
+    setTimeout(() => {
+      setClickCalendar(false);
+    }, 1000);
   }
 
   return (
@@ -15,8 +25,11 @@ export default function Head({ date, setDate }) {
       <div></div>
       <Title>{date ? date : "Today"}</Title>
       <BoxInput>
-        <IoCalendar className="icon" size="35px" />
-        <Input type="date" onChange={handleInput} />
+        <IoCalendar
+          className={clickCalendar ? "anima-icon icon" : "icon"}
+          size="35px"
+        />
+        <Input onClick={shakeCalendar} type="date" onChange={handleInput} />
       </BoxInput>
     </Wrapper>
   );
@@ -28,6 +41,14 @@ const Wrapper = styled.div`
   grid-template-rows: 1fr;
 
   position: relative;
+  font-family: "Poppins", sans-serif;
+
+  position: relative;
+  .calendar {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+  }
 `;
 
 const Title = styled.h2`
@@ -37,16 +58,31 @@ const Title = styled.h2`
   text-align: center;
 `;
 
+const Shake = keyframes`
+
+  0% { transform: rotate(0deg); }
+  10% { transform: rotate(-10deg); }
+  20% { transform: rotate(10deg); }
+  30% { transform: rotate(-10deg); }
+  40% { transform: rotate(10deg); }
+  50% { transform: rotate(-10deg); }
+  60% { transform: rotate(10deg); }
+  70% { transform: rotate(-10deg); }
+  80% { transform: rotate(10deg); }
+  90% { transform: rotate(-10deg); }
+  100% { transform: rotate(0deg); }
+`;
+
 const BoxInput = styled.div`
   display: flex;
   justify-content: end;
   transition: all 0.5s ease-out;
 
-  &:active {
-    .icon {
-      transition: all 0.1s ease-out;
-      transform: translateX(-1px);
-    }
+  .anima-icon {
+    animation: ${Shake} 0.8s ease-in-out;
+  }
+  .icon {
+    /* z-index: 3; */
   }
 `;
 
@@ -58,4 +94,5 @@ const Input = styled.input`
   position: absolute;
   top: 0px;
   right: 3px;
+  z-index: 1;
 `;

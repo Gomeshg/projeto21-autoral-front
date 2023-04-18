@@ -1,10 +1,11 @@
 import styled from "styled-components";
+import { useState, useEffect } from "react";
 import { useSession } from "../services/session";
 import Header from "../components/Header";
 import Line from "../components/Line";
-import { useState, useEffect } from "react";
 import Head from "../components/Head";
 import LineButton from "../components/LineButton";
+import Scheduling from "../components/Scheduling";
 import { getLine } from "../services/lineAPI";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -13,6 +14,9 @@ export default function Dashboard() {
   const { session } = useSession();
   const [date, setDate] = useState(null);
   const [lines, setLines] = useState(null);
+  const [refresh, setRefresh] = useState(false);
+
+  const [scheduling, setScheduling] = useState(false);
 
   function getDateNow() {
     const num = 9;
@@ -30,17 +34,18 @@ export default function Dashboard() {
     return `${day}-${month}-${year}`;
   }
 
-  useEffect(() => {
-    const date = getDateNow();
-    getLine(date, session.token)
-      .then((res) => {
-        setLines(res);
-        toast.success("Lines obtidas com sucesso!");
-      })
-      .catch((e) => {
-        toast.error("Houve um erro!");
-      });
-  }, []);
+  // useEffect(() => {
+  //   const date = getDateNow();
+  //   getLine(date, session.token)
+  //     .then((res) => {
+  //       setLines(res);
+  //       toast.success("Lines obtidas com sucesso!");
+  //     })
+  //     .catch((e) => {
+  //       alert(e.message);
+  //       toast.error("Houve um erro!");
+  //     });
+  // }, [refresh]);
 
   return (
     <Screen>
@@ -48,9 +53,10 @@ export default function Dashboard() {
 
       <LineContainer>
         <Head date={date} setDate={setDate} setLines={setLines} />
-        <Line />
-        <LineButton />
+        <Line lines={lines} />
+        <LineButton setScheduling={setScheduling} />
       </LineContainer>
+      <Scheduling scheduling={scheduling} setScheduling={setScheduling} />
       <ToastContainer />
     </Screen>
   );
@@ -61,7 +67,7 @@ const Screen = styled.div`
   min-height: 100vh;
   max-height: min-content;
 
-  background-color: rgba(255, 0, 0, 0.5);
+  position: relative;
 `;
 
 const LineContainer = styled.div`
@@ -74,5 +80,4 @@ const LineContainer = styled.div`
   gap: 20px;
 
   position: relative;
-  background-color: rgba(0, 255, 0, 0.5);
 `;

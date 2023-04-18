@@ -7,8 +7,6 @@ import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard";
 
 export default function App() {
-  // LOGIC
-  // UI
   return (
     <>
       <GlobalStyle />
