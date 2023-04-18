@@ -71,7 +71,10 @@ const Screen = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+
+  a {
+    margin-top: 30px;
+  }
 `;
 
 const BoxInput = styled.form`

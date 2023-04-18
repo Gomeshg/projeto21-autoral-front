@@ -22,13 +22,11 @@ export default function Head({ date, setDate }) {
 
   return (
     <Wrapper>
+      {/* Div vazia para auxiliar na estilização com grid */}
       <div></div>
       <Title>{date ? date : "Today"}</Title>
       <BoxInput>
-        <IoCalendar
-          className={clickCalendar ? "anima-icon icon" : "icon"}
-          size="35px"
-        />
+        <IoCalendar className={clickCalendar ? "anima-icon" : ""} size="35px" />
         <Input onClick={shakeCalendar} type="date" onChange={handleInput} />
       </BoxInput>
     </Wrapper>
@@ -41,7 +39,6 @@ const Wrapper = styled.div`
   grid-template-rows: 1fr;
 
   position: relative;
-  font-family: "Poppins", sans-serif;
 
   position: relative;
   .calendar {
@@ -80,9 +77,6 @@ const BoxInput = styled.div`
 
   .anima-icon {
     animation: ${Shake} 0.8s ease-in-out;
-  }
-  .icon {
-    /* z-index: 3; */
   }
 `;
 

@@ -37,7 +37,7 @@ const Shake = keyframes`
 const Wrapper = styled.div`
   position: absolute;
   left: calc(50% - 25px);
-  bottom: 0px;
+  bottom: -5px;
 
   .click {
     animation: ${Shake} 0.8s ease-in-out;
@@ -49,6 +49,10 @@ const Button = styled.button`
   height: 50px;
 
   border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   background-color: black;
   border: 2.5px double rgb(100, 100, 100);

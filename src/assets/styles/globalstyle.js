@@ -10,12 +10,9 @@ const GlobalStyle = createGlobalStyle`
     outline: none;
     font-size: 16px;
     word-wrap: break-word;
+    font-family: "Poppins", sans-serif;
   }
 
- 
-
-  
- 
 `;
 
 export { GlobalStyle };
