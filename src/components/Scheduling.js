@@ -4,8 +4,16 @@ import InputScheduling from "./InputScheduling";
 import Select from "./Select";
 import { getDateNow, getTimeNow } from "../utils/functions";
 import { cutTypes, avgDurations } from "../utils/objects";
+import Button from "./Button";
+import { postLine } from "../services/lineAPI";
+import { useSession } from "../services/session";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Scheduling({ scheduling, setScheduling }) {
+  const { session } = useSession();
+
   const [stepOne, setStepOne] = useState(false);
   const [stepTwo, setSteptwo] = useState(false);
   const [type, setType] = useState(null);
@@ -14,19 +22,12 @@ export default function Scheduling({ scheduling, setScheduling }) {
   const [avgDuration, setAvgDuration] = useState(null);
 
   useEffect(() => {
-    const today = new Date();
-
     setDate(getDateNow());
     setTime(getTimeNow());
   }, []);
 
   useEffect(() => {
-    if (scheduling) {
-      setStepOne(true);
-      setTimeout(() => {
-        setSteptwo(true);
-      }, 300);
-    }
+    openScheduling();
   }, [scheduling]);
 
   function crashScheduling() {
@@ -35,6 +36,29 @@ export default function Scheduling({ scheduling, setScheduling }) {
     setTimeout(() => {
       setStepOne(false);
     }, 300);
+  }
+
+  function openScheduling() {
+    if (scheduling) {
+      setStepOne(true);
+      setTimeout(() => {
+        setSteptwo(true);
+      }, 300);
+    }
+  }
+
+  function schedule(e) {
+    e.preventDefault();
+    console.log();
+    const body = { type, date, time, avgDuration };
+    postLine(body, session.token)
+      .then((res) => {
+        toast.success("Agendamento bem sucedido!");
+        setScheduling(false);
+      })
+      .catch((e) => {
+        toast.error("Erro no agendamento!");
+      });
   }
 
   return (
@@ -50,6 +74,7 @@ export default function Scheduling({ scheduling, setScheduling }) {
         }
       ></Background>
       <Schedule
+        onSubmit={schedule}
         className={
           stepOne && !stepTwo
             ? "scheduling"
@@ -86,7 +111,10 @@ export default function Scheduling({ scheduling, setScheduling }) {
           hashValues={avgDurations}
           setValue={setAvgDuration}
         />
+
+        <Button submit="submit" name="Agendar" />
       </Schedule>
+      <ToastContainer />
     </Wrapper>
   );
 }
@@ -98,6 +126,10 @@ const Wrapper = styled.div`
 
   .scheduling {
     height: 60vh;
+    padding-top: 5%;
+    @media (min-width: 1040px) {
+      height: 80vh;
+    }
   }
 
   .show {
@@ -120,11 +152,11 @@ const Background = styled.div`
   transition: all 0.3s ease-out 0.1s;
 `;
 
-const Schedule = styled.div`
+const Schedule = styled.form`
   height: 0vh;
   width: 80%;
-  padding: 5%;
-  overflow: hidden;
+  padding: 0px 5%;
+  overflow: scroll;
   background-color: rgb(200, 200, 200);
 
   border-radius: 15px;

@@ -3,27 +3,9 @@ import { getLine, postLine, putLine, deleteLine } from "../services/lineAPI";
 import LineButton from "./LineButton";
 import User from "./User";
 
-export default function Line() {
+export default function Line({ lines }) {
   return (
     <Screen>
-      <User />
-      <User />
-      <User />
-      <User />
-
-      <User />
-      <User />
-      <User />
-      <User />
-
-      <User />
-      <User />
-      <User />
-      <User />
-
-      <User />
-      <User />
-      <User />
       <User />
     </Screen>
   );

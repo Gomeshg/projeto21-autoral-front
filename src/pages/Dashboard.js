@@ -9,6 +9,7 @@ import Scheduling from "../components/Scheduling";
 import { getLine } from "../services/lineAPI";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getDateNow, convertToPtBr } from "../utils/functions";
 
 export default function Dashboard() {
   const { session } = useSession();
@@ -18,34 +19,23 @@ export default function Dashboard() {
 
   const [scheduling, setScheduling] = useState(false);
 
-  function getDateNow() {
-    const num = 9;
-    const date = new Date();
-    const year = date.getFullYear();
-    const month =
-      (date.getMonth() + 1).toString().length === 1
-        ? `0${date.getMonth() + 1}`
-        : date.getMonth() + 1;
-    const day =
-      date.getDate().toString().length === 1
-        ? `0${date.getDate()}`
-        : date.getDate();
+  useEffect(() => {
+    setDate(getDateNow());
+  }, []);
 
-    return `${day}-${month}-${year}`;
-  }
-
-  // useEffect(() => {
-  //   const date = getDateNow();
-  //   getLine(date, session.token)
-  //     .then((res) => {
-  //       setLines(res);
-  //       toast.success("Lines obtidas com sucesso!");
-  //     })
-  //     .catch((e) => {
-  //       alert(e.message);
-  //       toast.error("Houve um erro!");
-  //     });
-  // }, [refresh]);
+  useEffect(() => {
+    if (date) {
+      const date_pt_br = convertToPtBr(date);
+      getLine(date_pt_br, session.token)
+        .then((res) => {
+          setLines(res);
+          toast.success("Lines obtidas com sucesso!");
+        })
+        .catch((e) => {
+          toast.error("Houve um erro!");
+        });
+    }
+  }, [refresh]);
 
   return (
     <Screen>
@@ -56,6 +46,7 @@ export default function Dashboard() {
         <Line lines={lines} />
         <LineButton setScheduling={setScheduling} />
       </LineContainer>
+
       <Scheduling scheduling={scheduling} setScheduling={setScheduling} />
       <ToastContainer />
     </Screen>
@@ -68,6 +59,11 @@ const Screen = styled.div`
   max-height: min-content;
 
   position: relative;
+
+  @media (min-width: 1040px) {
+    width: 620px;
+    margin: 0 auto;
+  }
 `;
 
 const LineContainer = styled.div`

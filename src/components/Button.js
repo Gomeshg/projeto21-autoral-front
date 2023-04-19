@@ -14,7 +14,7 @@ const Screen = styled.button`
   font-weight: bold;
   cursor: pointer;
 
-  transition: all 1.5s ease 0s;
+  transition: all 0.2s ease-out;
 
   &:hover {
     color: rgb(220, 220, 220);

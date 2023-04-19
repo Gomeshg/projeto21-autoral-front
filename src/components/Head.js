@@ -3,8 +3,9 @@ import { IoCalendar } from "react-icons/io5";
 import { getLine } from "../services/lineAPI";
 import { useSession } from "../services/session";
 import { useState } from "react";
+import Date from "./Date";
 
-export default function Head({ date, setDate }) {
+export default function Head({ date, setDate, setLines }) {
   const { session } = useSession();
   const [clickCalendar, setClickCalendar] = useState(false);
 
@@ -24,7 +25,7 @@ export default function Head({ date, setDate }) {
     <Wrapper>
       {/* Div vazia para auxiliar na estilização com grid */}
       <div></div>
-      <Title>{date ? date : "Today"}</Title>
+      <Date date={date} />
       <BoxInput>
         <IoCalendar className={clickCalendar ? "anima-icon" : ""} size="35px" />
         <Input onClick={shakeCalendar} type="date" onChange={handleInput} />
@@ -46,13 +47,6 @@ const Wrapper = styled.div`
     right: 0px;
     top: 0px;
   }
-`;
-
-const Title = styled.h2`
-  font-size: 25px;
-  font-weight: bold;
-
-  text-align: center;
 `;
 
 const Shake = keyframes`
@@ -87,6 +81,5 @@ const Input = styled.input`
   opacity: 0;
   position: absolute;
   top: 0px;
-  right: 3px;
-  z-index: 1;
+  right: 2px;
 `;

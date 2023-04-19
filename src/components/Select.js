@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 
 export default function Select({ id, label, hashValues, setValue }) {
@@ -6,6 +6,10 @@ export default function Select({ id, label, hashValues, setValue }) {
   for (const key in hashValues) {
     arrayValues.push({ key, value: hashValues[key] });
   }
+
+  useEffect(() => {
+    setValue(arrayValues[0].key);
+  }, []);
 
   function handleSelect(e) {
     setValue(e.target.value);
