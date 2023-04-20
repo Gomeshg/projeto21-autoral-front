@@ -15,10 +15,9 @@ export default function Dashboard() {
   const { session } = useSession();
   const [date, setDate] = useState(null);
   const [lines, setLines] = useState(null);
-  const [refresh, setRefresh] = useState(false);
 
   const [scheduling, setScheduling] = useState(false);
-
+  console.log(lines);
   useEffect(() => {
     setDate(getDateNow());
   }, []);
@@ -35,7 +34,7 @@ export default function Dashboard() {
           toast.error("Houve um erro!");
         });
     }
-  }, [refresh]);
+  }, [date]);
 
   return (
     <Screen>

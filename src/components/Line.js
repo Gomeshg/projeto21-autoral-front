@@ -5,9 +5,7 @@ import User from "./User";
 
 export default function Line({ lines }) {
   return (
-    <Screen>
-      <User />
-    </Screen>
+    <Screen>{lines && lines.map((line, index) => <User key={index} />)}</Screen>
   );
 }
 

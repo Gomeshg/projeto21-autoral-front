@@ -3,7 +3,7 @@ import { IoCalendar } from "react-icons/io5";
 import { getLine } from "../services/lineAPI";
 import { useSession } from "../services/session";
 import { useState } from "react";
-import Date from "./Date";
+import Date from "./DateTitle";
 
 export default function Head({ date, setDate, setLines }) {
   const { session } = useSession();

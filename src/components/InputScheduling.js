@@ -3,7 +3,7 @@ import styled from "styled-components";
 export default function InputScheduling({ id, label, type, setValue, value }) {
   return (
     <Wrapper>
-      <Label for={id}>{label}</Label>
+      <Label htmlFor={id}>{label}</Label>
       <Input
         id={id}
         name={id}

@@ -34,11 +34,21 @@ export function dateIsYesterday(date) {
   return false;
 }
 
+export function formatDate(date) {
+  const week = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+  const newDate = new Date(`${date}T00:00:00`);
+  const day = String(newDate.getDate()).padStart(2, "0");
+  const month = String(newDate.getMonth() + 1).padStart(2, "0");
+  const week_day = week[newDate.getDay()];
+  return `${week_day}, ${day}/${month}`;
+}
+
 export function convertToPtBr(date) {
   const arrayDate = date.split("-");
   const year = arrayDate[0];
   const month = arrayDate[1];
   const day = arrayDate[2];
+
   return `${day}-${month}-${year}`;
 }
 

@@ -3,21 +3,23 @@ import {
   getDateNow,
   dateIsTomorrow,
   dateIsYesterday,
+  formatDate,
 } from "../utils/functions";
 
-export default function Date({ date }) {
+export default function DateTitle({ date }) {
   function defineTitle() {
     if (getDateNow() === date) {
-      return "Today";
+      return "Hoje";
     } else if (dateIsTomorrow(date)) {
-      return "Tomorrow";
+      return "Amanhã";
     } else if (dateIsYesterday(date)) {
-      return "Yesterday";
+      return "Ontem";
     }
-    return date;
+
+    return formatDate(date);
   }
 
-  return <Wrapper>{defineTitle()}</Wrapper>;
+  return <Wrapper>{date ? defineTitle() : ""}</Wrapper>;
 }
 
 const Wrapper = styled.div`

@@ -16,10 +16,12 @@ export default function Select({ id, label, hashValues, setValue }) {
   }
   return (
     <Wrapper>
-      <Label for={id}>{label}</Label>
+      <Label htmlFor={id}>{label}</Label>
       <Selected id={id} name={id} onChange={handleSelect}>
-        {arrayValues.map((item) => (
-          <Option value={item.key}>{item.value}</Option>
+        {arrayValues.map((item, index) => (
+          <Option value={item.key} key={index}>
+            {item.value}
+          </Option>
         ))}
       </Selected>
     </Wrapper>

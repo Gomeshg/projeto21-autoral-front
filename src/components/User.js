@@ -3,7 +3,7 @@ import { GrUpdate } from "react-icons/gr";
 import { FaTrashAlt } from "react-icons/fa";
 import { useState } from "react";
 
-export default function User() {
+export default function User({}) {
   const [clickUpdate, setClickUpdate] = useState(false);
   const [clickDelete, setClickDelete] = useState(false);
 

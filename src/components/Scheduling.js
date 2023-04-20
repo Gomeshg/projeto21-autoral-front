@@ -17,8 +17,8 @@ export default function Scheduling({ scheduling, setScheduling }) {
   const [stepOne, setStepOne] = useState(false);
   const [stepTwo, setSteptwo] = useState(false);
   const [type, setType] = useState(null);
-  const [date, setDate] = useState(null);
-  const [time, setTime] = useState(null);
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
   const [avgDuration, setAvgDuration] = useState(null);
 
   useEffect(() => {
