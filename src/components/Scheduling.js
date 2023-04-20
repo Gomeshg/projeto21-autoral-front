@@ -49,7 +49,6 @@ export default function Scheduling({ scheduling, setScheduling }) {
 
   function schedule(e) {
     e.preventDefault();
-    console.log();
     const body = { type, date, time, avgDuration };
     postLine(body, session.token)
       .then((res) => {
@@ -72,7 +71,7 @@ export default function Scheduling({ scheduling, setScheduling }) {
             ? "background show"
             : ""
         }
-      ></Background>
+      />
       <Schedule
         onSubmit={schedule}
         className={
@@ -175,5 +174,3 @@ const Schedule = styled.form`
   justify-content: start;
   gap: 30px;
 `;
-
-const BoxTime = styled.div``;

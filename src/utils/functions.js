@@ -58,3 +58,21 @@ export function getTimeNow() {
   const hours = today.getHours() + 1;
   return `${hours}:00`;
 }
+
+export function formatTime(date) {
+  const newDate = new Date(date);
+  const hours = String(newDate.getHours()).padStart(2, "0");
+  const minutes = String(newDate.getMinutes()).padStart(2, "0");
+  return `${hours}:${minutes}`;
+}
+
+export function formatName(name) {
+  return `${name.split(" ")[0]}`;
+}
+
+export function isUser(id, userId) {
+  if (id === userId) {
+    return true;
+  }
+  return false;
+}

@@ -11,6 +11,8 @@ const GlobalStyle = createGlobalStyle`
     font-size: 16px;
     word-wrap: break-word;
     font-family: "Poppins", sans-serif;
+
+   
   }
 
 `;

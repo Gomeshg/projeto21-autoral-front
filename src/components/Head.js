@@ -5,7 +5,7 @@ import { useSession } from "../services/session";
 import { useState } from "react";
 import Date from "./DateTitle";
 
-export default function Head({ date, setDate, setLines }) {
+export default function Head({ date, setDate }) {
   const { session } = useSession();
   const [clickCalendar, setClickCalendar] = useState(false);
 

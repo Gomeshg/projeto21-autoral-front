@@ -1,11 +1,31 @@
 import styled from "styled-components";
-import { getLine, postLine, putLine, deleteLine } from "../services/lineAPI";
-import LineButton from "./LineButton";
+// import { getLine, postLine, putLine, deleteLine } from "../services/lineAPI";
 import User from "./User";
 
-export default function Line({ lines }) {
+export default function Line({
+  lines,
+  refresh,
+  setRefresh,
+  setConfirm,
+  responseConfirm,
+}) {
   return (
-    <Screen>{lines && lines.map((line, index) => <User key={index} />)}</Screen>
+    <Screen>
+      {lines &&
+        lines.map((line, index) => (
+          <User
+            key={index}
+            id={line.userId}
+            lineId={line.id}
+            name={line.user.name}
+            initTime={line.initTime}
+            setRefresh={setRefresh}
+            refresh={refresh}
+            setConfirm={setConfirm}
+            responseConfirm={responseConfirm}
+          />
+        ))}
+    </Screen>
   );
 }
 

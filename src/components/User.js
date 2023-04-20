@@ -2,13 +2,30 @@ import styled, { keyframes } from "styled-components";
 import { GrUpdate } from "react-icons/gr";
 import { FaTrashAlt } from "react-icons/fa";
 import { useState } from "react";
+import { useSession } from "../services/session";
+import { formatTime, formatName, isUser } from "../utils/functions";
+import { deleteLine, updateLine } from "../services/lineAPI";
+import { useEffect } from "react";
 
-export default function User({}) {
+export default function User({
+  id,
+  name,
+  initTime,
+  lineId,
+  setRefresh,
+  refresh,
+  setConfirm,
+  responseConfirm,
+}) {
+  const { session } = useSession();
+  const { token, userId } = session;
+
   const [clickUpdate, setClickUpdate] = useState(false);
   const [clickDelete, setClickDelete] = useState(false);
 
   function shakeUpdateIcon() {
     setClickUpdate(true);
+
     setTimeout(() => {
       setClickUpdate(false);
     }, 1000);
@@ -18,25 +35,38 @@ export default function User({}) {
     setClickDelete(true);
     setTimeout(() => {
       setClickDelete(false);
-    }, 1000);
+      setConfirm(true);
+    }, 500);
   }
+
+  useEffect(() => {
+    if (responseConfirm) {
+      deleteLine(lineId, token).then((res) => {
+        setRefresh(!refresh);
+      });
+    }
+  }, [responseConfirm]);
 
   return (
     <Wrapper>
-      <Time>09:00</Time>
-      <Name>Hugo</Name>
-      <BoxIcon>
-        <GrUpdate
-          className={clickUpdate ? "anima-icon" : ""}
-          onClick={shakeUpdateIcon}
-          size="23px"
-        />
-        <FaTrashAlt
-          className={clickDelete ? "anima-icon" : ""}
-          onClick={shakeDeleteIcon}
-          size="23px"
-        />
-      </BoxIcon>
+      <Time>{formatTime(initTime)}</Time>
+      <Name>{formatName(name)}</Name>
+      {isUser(id, userId) ? (
+        <BoxIcon>
+          <GrUpdate
+            className={clickUpdate ? "anima-icon" : ""}
+            onClick={shakeUpdateIcon}
+            size="23px"
+          />
+          <FaTrashAlt
+            className={clickDelete ? "anima-icon" : ""}
+            onClick={shakeDeleteIcon}
+            size="23px"
+          />
+        </BoxIcon>
+      ) : (
+        <InvisibleBox></InvisibleBox>
+      )}
     </Wrapper>
   );
 }
@@ -52,7 +82,12 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  font-family: "Poppins", sans-serif;
+  .bunda {
+    display: none !important;
+    position: fixed !important;
+    background-color: red;
+    color: red;
+  }
 `;
 
 const Name = styled.p`
@@ -89,4 +124,9 @@ const BoxIcon = styled.div`
   .anima-icon {
     animation: ${Shake} 0.8s ease-in-out;
   }
+`;
+
+const InvisibleBox = styled.div`
+  width: 61px;
+  height: 23px;
 `;
