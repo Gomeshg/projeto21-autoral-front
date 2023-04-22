@@ -37,6 +37,7 @@ export default function SignUp() {
         toast.success("Cadastro realizado com sucesso!");
       })
       .catch((e) => {
+        console.log(e.response);
         toast.error("Erro no cadastro");
       });
   }
@@ -46,24 +47,9 @@ export default function SignUp() {
       <Icon />
       <BoxInput onSubmit={register} autoComplete="off">
         <Input placeholder="Nome" type="text" setValue={setName} value={name} />
-        <Input
-          placeholder="Celular"
-          type="number"
-          setValue={setNumberPhone}
-          value={numberPhone}
-        />
-        <Input
-          placeholder="E-mail"
-          type="email"
-          setValue={setEmail}
-          value={email}
-        />
-        <Input
-          placeholder="Senha"
-          type="password"
-          setValue={setPassword}
-          value={password}
-        />
+        <Input placeholder="Celular" type="number" setValue={setNumberPhone} value={numberPhone} />
+        <Input placeholder="E-mail" type="email" setValue={setEmail} value={email} />
+        <Input placeholder="Senha" type="password" setValue={setPassword} value={password} />
         <Button submit="submit" name="Cadastrar-se" />
       </BoxInput>
       <Link to="/sign-in">Já possui uma conta?</Link>

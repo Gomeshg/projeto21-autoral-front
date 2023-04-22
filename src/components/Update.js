@@ -11,31 +11,39 @@ import { useSession } from "../services/session";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function Scheduling({ scheduling, setScheduling, setRefresh, refresh }) {
+export default function Update({ update, setUpdate, setRefresh, refresh }) {
   const { session } = useSession();
 
   const [stepOne, setStepOne] = useState(false);
   const [stepTwo, setSteptwo] = useState(false);
+
+  const [id, setId] = useState(null);
   const [type, setType] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [avgDuration, setAvgDuration] = useState("");
 
   useEffect(() => {
-    setDate(getDateNow());
-    setTime(getTimeNow());
-    setType("MAQUINA");
-    setAvgDuration("sessenta");
-  }, []);
+    if (update) {
+      getOneLine(session.token).then((res) => {
+        const { type, date, initTime, avgDuration } = extractDataFromLine(res);
+        setId(res.id);
+        setDate(date);
+        setTime(initTime);
+        setType(type);
+        setAvgDuration(avgDuration);
+      });
+    }
+  }, [update]);
 
   useEffect(() => {
-    if (scheduling) {
-      openScheduling();
+    if (update) {
+      openUpdate();
     }
-  }, [scheduling]);
+  }, [update]);
 
-  function crashScheduling() {
-    setScheduling(false);
+  function crashUpdate() {
+    setUpdate(false);
 
     setSteptwo(false);
     setTimeout(() => {
@@ -43,31 +51,33 @@ export default function Scheduling({ scheduling, setScheduling, setRefresh, refr
     }, 300);
   }
 
-  function openScheduling() {
+  function openUpdate() {
     setStepOne(true);
     setTimeout(() => {
       setSteptwo(true);
     }, 300);
   }
 
-  function post(e) {
+  function put(e) {
     e.preventDefault();
+
     const body = { type, date: convertToPtBr(date), initTime: time, avgDuration: formatAvgDuration(avgDuration) };
-    postLine(body, session.token)
-      .then((res) => {
-        crashScheduling();
+    putLine(id, body, session.token)
+      .then(() => {
+        crashUpdate();
+        toast.success("Reagendamento bem sucedido!");
         setRefresh(!refresh);
       })
-      .catch((e) => {
-        crashScheduling();
-        toast.error("Você já possui um agendamento!");
+      .catch(() => {
+        crashUpdate();
+        toast.error("Erro no reagendamento!");
       });
   }
 
   return (
     <Wrapper>
-      <Background onClick={crashScheduling} className={stepOne && !stepTwo ? "background" : stepOne && stepTwo ? "background show" : ""} />
-      <Schedule onSubmit={post} className={stepOne && !stepTwo ? "scheduling" : stepOne && stepTwo ? "scheduling show" : ""}>
+      <Background onClick={crashUpdate} className={stepOne && !stepTwo ? "background" : stepOne && stepTwo ? "background show" : ""} />
+      <Updated onSubmit={put} className={stepOne && !stepTwo ? "update" : stepOne && stepTwo ? "update show" : ""}>
         <Select value={type} id="cut-types" label="Tipo de corte:" hashValues={cutTypes} setValue={setType} />
 
         <InputScheduling id="data" label="Data:" type="date" setValue={setDate} value={date} />
@@ -76,8 +86,8 @@ export default function Scheduling({ scheduling, setScheduling, setRefresh, refr
 
         <Select value={avgDuration} id="avg-duration" label="Duração média:" hashValues={avgDurations} setValue={setAvgDuration} />
 
-        <Button submit="submit" name={"Agendar"} />
-      </Schedule>
+        <Button submit="submit" name={"Reagendar"} />
+      </Updated>
 
       <ToastContainer />
     </Wrapper>
@@ -89,7 +99,7 @@ const Wrapper = styled.div`
     height: 100vh;
   }
 
-  .scheduling {
+  .update {
     height: 60vh;
     padding-top: 5%;
     @media (min-width: 1040px) {
@@ -117,7 +127,7 @@ const Background = styled.div`
   transition: all 0.3s ease-out 0.1s;
 `;
 
-const Schedule = styled.form`
+const Updated = styled.form`
   height: 0vh;
   width: 80%;
   padding: 0px 5%;

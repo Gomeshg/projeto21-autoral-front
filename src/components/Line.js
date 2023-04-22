@@ -2,13 +2,7 @@ import styled from "styled-components";
 // import { getLine, postLine, putLine, deleteLine } from "../services/lineAPI";
 import User from "./User";
 
-export default function Line({
-  lines,
-  refresh,
-  setRefresh,
-  setConfirm,
-  responseConfirm,
-}) {
+export default function Line({ lines, refresh, setRefresh, setConfirm, responseConfirm, setScheduling, setUpdate }) {
   return (
     <Screen>
       {lines &&
@@ -23,6 +17,8 @@ export default function Line({
             refresh={refresh}
             setConfirm={setConfirm}
             responseConfirm={responseConfirm}
+            setScheduling={setScheduling}
+            setUpdate={setUpdate}
           />
         ))}
     </Screen>

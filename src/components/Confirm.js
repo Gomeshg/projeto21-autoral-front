@@ -25,6 +25,9 @@ export default function Confirm({ confirm, setConfirm, setResponseConfirm }) {
   function clickOk() {
     setResponseConfirm(true);
     crashConfirm();
+    setTimeout(() => {
+      setResponseConfirm(false);
+    }, 1000);
   }
 
   function clickCancel() {
@@ -37,28 +40,11 @@ export default function Confirm({ confirm, setConfirm, setResponseConfirm }) {
 
   return (
     <Wrapper>
-      <Background
-        onClick={crashConfirm}
-        className={
-          stepOne && !stepTwo
-            ? "background"
-            : stepOne && stepTwo
-            ? "background show"
-            : ""
-        }
-      />
-      <Content
-        className={
-          stepOne && !stepTwo
-            ? "confirm"
-            : stepOne && stepTwo
-            ? "confirm show"
-            : ""
-        }
-      >
+      <Background onClick={crashConfirm} className={stepOne && !stepTwo ? "background" : stepOne && stepTwo ? "background show" : ""} />
+      <Content className={stepOne && !stepTwo ? "confirm" : stepOne && stepTwo ? "confirm show" : ""}>
         <Text>Você tem certeza que deseja excluir ?</Text>
         <BoxButton>
-          <Button onClick={clickOk}>OK</Button>
+          <Button onClick={clickOk}>Ok</Button>
           <Button onClick={clickCancel}>Cancelar</Button>
         </BoxButton>
       </Content>
@@ -75,6 +61,8 @@ const Wrapper = styled.div`
     height: 30vh;
     @media (min-width: 1040px) {
       height: 50vh;
+      width: 30%;
+      left: 35%;
     }
   }
 
@@ -133,17 +121,20 @@ const BoxButton = styled.div`
   gap: 50px;
 
   button:nth-child(1) {
-    background-color: rgba(0, 255, 0, 0.8);
+    border: 2px solid white;
+    background-color: black;
+    color: white;
   }
   button:nth-child(2) {
-    background-color: rgba(255, 0, 0, 0.8);
+    border: 2px solid black;
+    background-color: white;
+    color: black;
   }
 `;
 
 const Button = styled.button`
   width: 100px;
   height: 50px;
-
   border-radius: 10px;
   font-weight: bold;
 `;

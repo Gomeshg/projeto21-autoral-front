@@ -1,7 +1,16 @@
 import api from "./API";
 
-export async function getLine(date, token) {
+export async function getLines(date, token) {
   const response = await api.get(`/line/${date}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}
+
+export async function getOneLine(token) {
+  const response = await api.get(`/line`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

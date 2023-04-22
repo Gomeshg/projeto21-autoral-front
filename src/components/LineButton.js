@@ -8,7 +8,7 @@ export default function LineButton({ setScheduling }) {
     setScheduling(true);
     setTimeout(() => {
       setClick(false);
-    }, 2000);
+    }, 1000);
   }
 
   return (

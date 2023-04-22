@@ -6,20 +6,25 @@ import Line from "../components/Line";
 import Head from "../components/Head";
 import LineButton from "../components/LineButton";
 import Scheduling from "../components/Scheduling";
+import Update from "../components/Update";
 import Confirm from "../components/Confirm";
-import { getLine } from "../services/lineAPI";
+import { getLines } from "../services/lineAPI";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getDateNow, convertToPtBr } from "../utils/functions";
+
+import { sortLine } from "../utils/functions";
 
 export default function Dashboard() {
   const { session } = useSession();
   const [date, setDate] = useState(null);
   const [lines, setLines] = useState(null);
+
   const [scheduling, setScheduling] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const [responseConfirm, setResponseConfirm] = useState(false);
   const [refresh, setRefresh] = useState(null);
+  const [update, setUpdate] = useState(false);
 
   useEffect(() => {
     setDate(getDateNow());
@@ -28,9 +33,9 @@ export default function Dashboard() {
   useEffect(() => {
     if (date) {
       const date_pt_br = convertToPtBr(date);
-      getLine(date_pt_br, session.token)
+      getLines(date_pt_br, session.token)
         .then((res) => {
-          setLines(res);
+          setLines(sortLine(res));
         })
         .catch((e) => {
           toast.error("Houve um erro!");
@@ -41,7 +46,6 @@ export default function Dashboard() {
   return (
     <Screen>
       <Header />
-
       <LineContainer>
         <Head date={date} setDate={setDate} />
         <Line
@@ -50,15 +54,14 @@ export default function Dashboard() {
           setRefresh={setRefresh}
           setConfirm={setConfirm}
           responseConfirm={responseConfirm}
+          setScheduling={setScheduling}
+          setUpdate={setUpdate}
         />
         <LineButton setScheduling={setScheduling} />
       </LineContainer>
-      <Scheduling scheduling={scheduling} setScheduling={setScheduling} />
-      <Confirm
-        confirm={confirm}
-        setConfirm={setConfirm}
-        setResponseConfirm={setResponseConfirm}
-      ></Confirm>
+      <Scheduling scheduling={scheduling} setScheduling={setScheduling} refresh={refresh} setRefresh={setRefresh} />
+      <Update update={update} setUpdate={setUpdate} refresh={refresh} setRefresh={setRefresh} />
+      <Confirm confirm={confirm} setConfirm={setConfirm} setResponseConfirm={setResponseConfirm}></Confirm>
       <ToastContainer />
     </Screen>
   );

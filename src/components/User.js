@@ -7,16 +7,7 @@ import { formatTime, formatName, isUser } from "../utils/functions";
 import { deleteLine, updateLine } from "../services/lineAPI";
 import { useEffect } from "react";
 
-export default function User({
-  id,
-  name,
-  initTime,
-  lineId,
-  setRefresh,
-  refresh,
-  setConfirm,
-  responseConfirm,
-}) {
+export default function User({ id, name, initTime, lineId, setRefresh, refresh, setConfirm, responseConfirm, setUpdate }) {
   const { session } = useSession();
   const { token, userId } = session;
 
@@ -28,7 +19,8 @@ export default function User({
 
     setTimeout(() => {
       setClickUpdate(false);
-    }, 1000);
+      setUpdate(true);
+    }, 500);
   }
 
   function shakeDeleteIcon() {
@@ -53,16 +45,8 @@ export default function User({
       <Name>{formatName(name)}</Name>
       {isUser(id, userId) ? (
         <BoxIcon>
-          <GrUpdate
-            className={clickUpdate ? "anima-icon" : ""}
-            onClick={shakeUpdateIcon}
-            size="23px"
-          />
-          <FaTrashAlt
-            className={clickDelete ? "anima-icon" : ""}
-            onClick={shakeDeleteIcon}
-            size="23px"
-          />
+          <GrUpdate className={clickUpdate ? "anima-icon" : ""} onClick={shakeUpdateIcon} size="23px" />
+          <FaTrashAlt className={clickDelete ? "anima-icon" : ""} onClick={shakeDeleteIcon} size="23px" />
         </BoxIcon>
       ) : (
         <InvisibleBox></InvisibleBox>

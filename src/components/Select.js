@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import styled from "styled-components";
 
-export default function Select({ id, label, hashValues, setValue }) {
+export default function Select({ value, id, label, hashValues, setValue }) {
   const arrayValues = [];
   for (const key in hashValues) {
     arrayValues.push({ key, value: hashValues[key] });
@@ -14,10 +14,12 @@ export default function Select({ id, label, hashValues, setValue }) {
   function handleSelect(e) {
     setValue(e.target.value);
   }
+
   return (
     <Wrapper>
       <Label htmlFor={id}>{label}</Label>
-      <Selected id={id} name={id} onChange={handleSelect}>
+
+      <Selected value={value} id={id} name={id} onChange={handleSelect}>
         {arrayValues.map((item, index) => (
           <Option value={item.key} key={index}>
             {item.value}
