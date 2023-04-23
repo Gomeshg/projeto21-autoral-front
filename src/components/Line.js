@@ -1,6 +1,7 @@
 import styled from "styled-components";
-// import { getLine, postLine, putLine, deleteLine } from "../services/lineAPI";
 import User from "./User";
+import { useState } from "react";
+import { useEffect } from "react";
 
 export default function Line({ lines, refresh, setRefresh, setConfirm, responseConfirm, setScheduling, setUpdate }) {
   return (
@@ -34,6 +35,5 @@ const Screen = styled.div`
 
   display: flex;
   flex-direction: column;
-
   gap: 10px;
 `;

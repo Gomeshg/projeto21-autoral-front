@@ -100,23 +100,6 @@ export function formatAvgDuration(avgDuration) {
   if (avgDuration === "trinta") return "30";
 }
 
-// export function sortLine(line) {
-//   for (let i = 0; i < line.length; i++) {
-//     let maior = i;
-
-//     for (let j = i + 1; j < line.length; j++) {
-//       if (new Date(line[j].initTime).getHours() < new Date(line[maior].initTime).getHours()) {
-//         maior = j;
-//       }
-//     }
-
-//     let aux = line[i];
-//     line[i] = line[maior];
-//     line[maior] = aux;
-//   }
-//   return line;
-// }
-
 export function sortLine(line) {
   for (let i = 0; i < line.length; i++) {
     let maior = i;

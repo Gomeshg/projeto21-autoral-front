@@ -6,8 +6,9 @@ import { useSession } from "../services/session";
 import { formatTime, formatName, isUser } from "../utils/functions";
 import { deleteLine, updateLine } from "../services/lineAPI";
 import { useEffect } from "react";
+import { extractDataFromLine } from "../utils/functions";
 
-export default function User({ id, name, initTime, lineId, setRefresh, refresh, setConfirm, responseConfirm, setUpdate }) {
+export default function User({ line, id, name, initTime, lineId, setRefresh, refresh, setConfirm, responseConfirm, setUpdate }) {
   const { session } = useSession();
   const { token, userId } = session;
 
@@ -30,6 +31,19 @@ export default function User({ id, name, initTime, lineId, setRefresh, refresh, 
       setConfirm(true);
     }, 500);
   }
+
+  // function orderUser() {
+  //   const initHours = new Date(initTime).getHours();
+  //   const initMinute = new Date(initTime).getMinutes();
+
+  //   const endHours = new Date(endTime).getHours();
+  //   const endMinute = new Date(endTime).getMinutes();
+
+  //   const totalMinutes = (initHours - 9) * 60 + initMinute / 3;
+  //   const position = `${totalMinutes}px`;
+
+  //   return position;
+  // }
 
   useEffect(() => {
     if (responseConfirm) {
@@ -59,19 +73,13 @@ const Wrapper = styled.div`
   padding: 0px 20px;
   width: 100%;
   height: 45px;
-  min-height: 45px;
+  min-height: 25px;
   border-radius: 30px;
   background-color: rgba(255, 255, 255, 1);
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  .bunda {
-    display: none !important;
-    position: fixed !important;
-    background-color: red;
-    color: red;
-  }
 `;
 
 const Name = styled.p`
@@ -110,7 +118,7 @@ const BoxIcon = styled.div`
   }
 `;
 
-const InvisibleBox = styled.div`
+const InvisibleBox = styled.section`
   width: 61px;
   height: 23px;
 `;
