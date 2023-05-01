@@ -38,30 +38,27 @@ export default function Dashboard() {
           setLines(sortLine(res));
         })
         .catch((e) => {
-          toast.error("Houve um erro!");
+          toast.error("Desculpe, houve um erro interno!");
         });
     }
-  }, [date, refresh]);
+  }, [date, refresh, session.token]);
 
   return (
     <Screen>
       <Header />
+
       <LineContainer>
         <Head date={date} setDate={setDate} />
-        <Line
-          lines={lines}
-          refresh={refresh}
-          setRefresh={setRefresh}
-          setConfirm={setConfirm}
-          responseConfirm={responseConfirm}
-          setScheduling={setScheduling}
-          setUpdate={setUpdate}
-        />
+        <Line lines={lines} refresh={refresh} setRefresh={setRefresh} setConfirm={setConfirm} responseConfirm={responseConfirm} setScheduling={setScheduling} setUpdate={setUpdate} />
         <LineButton setScheduling={setScheduling} />
       </LineContainer>
-      <Scheduling scheduling={scheduling} setScheduling={setScheduling} refresh={refresh} setRefresh={setRefresh} />
+
+      <Scheduling scheduling={scheduling} setScheduling={setScheduling} refresh={refresh} setRefresh={setRefresh} dateChosen={date} />
+
       <Update update={update} setUpdate={setUpdate} refresh={refresh} setRefresh={setRefresh} />
+
       <Confirm confirm={confirm} setConfirm={setConfirm} setResponseConfirm={setResponseConfirm}></Confirm>
+
       <ToastContainer />
     </Screen>
   );

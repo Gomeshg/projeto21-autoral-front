@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import InputScheduling from "./InputScheduling";
 import Select from "./Select";
-import { getDateNow, getTimeNow, extractDataFromLine, formatAvgDuration, convertToPtBr } from "../utils/functions";
+import { extractDataFromLine, formatAvgDuration, convertToPtBr } from "../utils/functions";
 import { cutTypes, avgDurations } from "../utils/objects";
 import Button from "./Button";
-import { postLine, putLine, getOneLine } from "../services/lineAPI";
+import { putLine, getOneLine } from "../services/lineAPI";
 import { useSession } from "../services/session";
 
 import { ToastContainer, toast } from "react-toastify";
@@ -34,7 +34,7 @@ export default function Update({ update, setUpdate, setRefresh, refresh }) {
         setAvgDuration(avgDuration);
       });
     }
-  }, [update]);
+  }, [update, session.token]);
 
   useEffect(() => {
     if (update) {
@@ -68,9 +68,15 @@ export default function Update({ update, setUpdate, setRefresh, refresh }) {
         toast.success("Reagendamento bem sucedido!");
         setRefresh(!refresh);
       })
-      .catch(() => {
+      .catch((e) => {
         crashUpdate();
-        toast.error("Erro no reagendamento!");
+        if (e.response.data.errorMessage === "Time already chosen") {
+          toast.error("Horário já agendado!");
+        } else if (e.response.data.errorMessage === "Time out") {
+          toast.error("Horário permitidos apenas de 9h às 18h");
+        } else {
+          toast.error("Desculpe, houve algum erro interno!");
+        }
       });
   }
 

@@ -36,6 +36,7 @@ export default function Confirm({ confirm, setConfirm, setResponseConfirm }) {
 
   useEffect(() => {
     openConfirm();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [confirm]);
 
   return (

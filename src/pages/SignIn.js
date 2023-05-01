@@ -37,8 +37,12 @@ export default function SignIn() {
         toast.success("Login realizado com sucesso!");
         navigate("/dashboard");
       })
-      .catch((err) => {
-        toast.error("Login inválido!");
+      .catch((e) => {
+        if (e.response.data.errorMessage === "Invalid login") {
+          toast.error("Login inválido!");
+        } else {
+          toast.error("Desculpe, houve um erro interno!");
+        }
       });
   }
 
@@ -46,22 +50,12 @@ export default function SignIn() {
     <Screen>
       <Icon />
       <BoxInput onSubmit={login} autoComplete="off">
-        <Input
-          placeholder="E-mail"
-          type="email"
-          setValue={setEmail}
-          value={email}
-        />
-        <Input
-          placeholder="Senha"
-          type="password"
-          setValue={setPassword}
-          value={password}
-        />
+        <Input placeholder="E-mail" type="email" setValue={setEmail} value={email} />
+        <Input placeholder="Senha" type="password" setValue={setPassword} value={password} />
         <Button submit="submit" name="Entrar" />
       </BoxInput>
       <ToastContainer />
-      <Link to="/">Não possui uma conta?</Link>
+      <Link to="/sign-up">Não possui uma conta?</Link>
     </Screen>
   );
 }

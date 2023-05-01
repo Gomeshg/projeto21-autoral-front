@@ -30,15 +30,17 @@ export default function SignUp() {
       name,
       numberPhone,
     };
-
     signUp(body)
       .then((res) => {
-        navigate("/sign-in");
+        navigate("/");
         toast.success("Cadastro realizado com sucesso!");
       })
       .catch((e) => {
-        console.log(e.response);
-        toast.error("Erro no cadastro");
+        if (e.response.data.errorMessage === "User already exist") {
+          toast.error("Usuário já cadastrado!");
+        } else {
+          toast.error("Desculpe, houve um erro interno!");
+        }
       });
   }
 
@@ -52,7 +54,7 @@ export default function SignUp() {
         <Input placeholder="Senha" type="password" setValue={setPassword} value={password} />
         <Button submit="submit" name="Cadastrar-se" />
       </BoxInput>
-      <Link to="/sign-in">Já possui uma conta?</Link>
+      <Link to="/">Já possui uma conta?</Link>
       <ToastContainer />
     </Screen>
   );

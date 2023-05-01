@@ -1,7 +1,5 @@
 import styled from "styled-components";
 import User from "./User";
-import { useState } from "react";
-import { useEffect } from "react";
 
 export default function Line({ lines, refresh, setRefresh, setConfirm, responseConfirm, setScheduling, setUpdate }) {
   return (

@@ -4,9 +4,8 @@ import { FaTrashAlt } from "react-icons/fa";
 import { useState } from "react";
 import { useSession } from "../services/session";
 import { formatTime, formatName, isUser } from "../utils/functions";
-import { deleteLine, updateLine } from "../services/lineAPI";
+import { deleteLine } from "../services/lineAPI";
 import { useEffect } from "react";
-import { extractDataFromLine } from "../utils/functions";
 
 export default function User({ line, id, name, initTime, lineId, setRefresh, refresh, setConfirm, responseConfirm, setUpdate }) {
   const { session } = useSession();
@@ -31,19 +30,6 @@ export default function User({ line, id, name, initTime, lineId, setRefresh, ref
       setConfirm(true);
     }, 500);
   }
-
-  // function orderUser() {
-  //   const initHours = new Date(initTime).getHours();
-  //   const initMinute = new Date(initTime).getMinutes();
-
-  //   const endHours = new Date(endTime).getHours();
-  //   const endMinute = new Date(endTime).getMinutes();
-
-  //   const totalMinutes = (initHours - 9) * 60 + initMinute / 3;
-  //   const position = `${totalMinutes}px`;
-
-  //   return position;
-  // }
 
   useEffect(() => {
     if (responseConfirm) {

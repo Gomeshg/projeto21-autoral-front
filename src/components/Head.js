@@ -1,12 +1,9 @@
 import styled, { keyframes } from "styled-components";
 import { IoCalendar } from "react-icons/io5";
-import { getLine } from "../services/lineAPI";
-import { useSession } from "../services/session";
 import { useState } from "react";
 import Date from "./DateTitle";
 
 export default function Head({ date, setDate }) {
-  const { session } = useSession();
   const [clickCalendar, setClickCalendar] = useState(false);
 
   function handleInput(e) {

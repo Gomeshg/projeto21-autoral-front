@@ -2,16 +2,16 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import InputScheduling from "./InputScheduling";
 import Select from "./Select";
-import { getDateNow, getTimeNow, extractDataFromLine, formatAvgDuration, convertToPtBr } from "../utils/functions";
+import { getDateNow, getTimeNow, formatAvgDuration, convertToPtBr } from "../utils/functions";
 import { cutTypes, avgDurations } from "../utils/objects";
 import Button from "./Button";
-import { postLine, putLine, getOneLine } from "../services/lineAPI";
+import { postLine } from "../services/lineAPI";
 import { useSession } from "../services/session";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function Scheduling({ scheduling, setScheduling, setRefresh, refresh }) {
+export default function Scheduling({ scheduling, setScheduling, setRefresh, refresh, dateChosen }) {
   const { session } = useSession();
 
   const [stepOne, setStepOne] = useState(false);
@@ -22,11 +22,11 @@ export default function Scheduling({ scheduling, setScheduling, setRefresh, refr
   const [avgDuration, setAvgDuration] = useState("");
 
   useEffect(() => {
-    setDate(getDateNow());
+    setDate(dateChosen || getDateNow());
     setTime(getTimeNow());
     setType("MAQUINA");
     setAvgDuration("sessenta");
-  }, []);
+  }, [dateChosen]);
 
   useEffect(() => {
     if (scheduling) {
@@ -56,11 +56,20 @@ export default function Scheduling({ scheduling, setScheduling, setRefresh, refr
     postLine(body, session.token)
       .then((res) => {
         crashScheduling();
+        toast.success("Agendamento feito com sucesso!");
         setRefresh(!refresh);
       })
       .catch((e) => {
         crashScheduling();
-        toast.error("Você já possui um agendamento!");
+        if (e.response.data.errorMessage === "Line Already Exists") {
+          toast.error("Você já possui um agendamento!");
+        } else if (e.response.data.errorMessage === "Time already chosen") {
+          toast.error("Horário já agendado!");
+        } else if (e.response.data.errorMessage === "Time out") {
+          toast.error("Horário permitidos apenas de 9h às 18h");
+        } else {
+          toast.error("Desculpe, houve algum erro interno!");
+        }
       });
   }
 
