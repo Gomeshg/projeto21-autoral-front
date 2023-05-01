@@ -30,15 +30,19 @@ export default function SignIn() {
       .then((res) => {
         const session = {
           token: res.data.token,
+          userId: res.data.userId,
         };
         setSession(session);
         localStorage.setItem("session", JSON.stringify(session));
-        console.log(session);
         toast.success("Login realizado com sucesso!");
         navigate("/dashboard");
       })
-      .catch((err) => {
-        toast.error("Erro no login!");
+      .catch((e) => {
+        if (e.response.data.errorMessage === "Invalid login") {
+          toast.error("Login inválido!");
+        } else {
+          toast.error("Desculpe, houve um erro interno!");
+        }
       });
   }
 
@@ -46,22 +50,12 @@ export default function SignIn() {
     <Screen>
       <Icon />
       <BoxInput onSubmit={login} autoComplete="off">
-        <Input
-          placeholder="E-mail"
-          type="email"
-          setValue={setEmail}
-          value={email}
-        />
-        <Input
-          placeholder="Senha"
-          type="password"
-          setValue={setPassword}
-          value={password}
-        />
+        <Input placeholder="E-mail" type="email" setValue={setEmail} value={email} />
+        <Input placeholder="Senha" type="password" setValue={setPassword} value={password} />
         <Button submit="submit" name="Entrar" />
       </BoxInput>
       <ToastContainer />
-      <Link to="/">Não possui uma conta?</Link>
+      <Link to="/sign-up">Não possui uma conta?</Link>
     </Screen>
   );
 }
@@ -71,7 +65,10 @@ const Screen = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+
+  a {
+    margin-top: 30px;
+  }
 `;
 
 const BoxInput = styled.form`

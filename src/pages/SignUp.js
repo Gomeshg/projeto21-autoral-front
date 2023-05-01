@@ -30,14 +30,17 @@ export default function SignUp() {
       name,
       numberPhone,
     };
-
     signUp(body)
       .then((res) => {
-        navigate("/sign-in");
+        navigate("/");
         toast.success("Cadastro realizado com sucesso!");
       })
       .catch((e) => {
-        toast.error("Erro no cadastro");
+        if (e.response.data.errorMessage === "User already exist") {
+          toast.error("Usuário já cadastrado!");
+        } else {
+          toast.error("Desculpe, houve um erro interno!");
+        }
       });
   }
 
@@ -46,27 +49,12 @@ export default function SignUp() {
       <Icon />
       <BoxInput onSubmit={register} autoComplete="off">
         <Input placeholder="Nome" type="text" setValue={setName} value={name} />
-        <Input
-          placeholder="Celular"
-          type="number"
-          setValue={setNumberPhone}
-          value={numberPhone}
-        />
-        <Input
-          placeholder="E-mail"
-          type="email"
-          setValue={setEmail}
-          value={email}
-        />
-        <Input
-          placeholder="Senha"
-          type="password"
-          setValue={setPassword}
-          value={password}
-        />
+        <Input placeholder="Celular" type="number" setValue={setNumberPhone} value={numberPhone} />
+        <Input placeholder="E-mail" type="email" setValue={setEmail} value={email} />
+        <Input placeholder="Senha" type="password" setValue={setPassword} value={password} />
         <Button submit="submit" name="Cadastrar-se" />
       </BoxInput>
-      <Link to="/sign-in">Já possui uma conta?</Link>
+      <Link to="/">Já possui uma conta?</Link>
       <ToastContainer />
     </Screen>
   );
@@ -77,7 +65,10 @@ const Screen = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+
+  a {
+    margin-top: 30px;
+  }
 `;
 
 const BoxInput = styled.form`
