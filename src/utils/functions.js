@@ -61,9 +61,9 @@ export function getTimeNow() {
 
 export function formatTime(date) {
   const newDate = new Date(date);
-  const hours = String(newDate.getHours()).padStart(2, "0");
+  const hours = String(newDate.getHours());
   const minutes = String(newDate.getMinutes()).padStart(2, "0");
-  return `${hours}:${minutes}`;
+  return minutes === "00" ? `${hours}h` : `${hours}h${minutes}`;
 }
 
 export function formatName(name) {

@@ -12,6 +12,7 @@ export default function Line({ lines, refresh, setRefresh, setConfirm, responseC
             lineId={line.id}
             name={line.user.name}
             initTime={line.initTime}
+            endTime={line.endTime}
             setRefresh={setRefresh}
             refresh={refresh}
             setConfirm={setConfirm}

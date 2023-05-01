@@ -7,7 +7,7 @@ import { formatTime, formatName, isUser } from "../utils/functions";
 import { deleteLine } from "../services/lineAPI";
 import { useEffect } from "react";
 
-export default function User({ line, id, name, initTime, lineId, setRefresh, refresh, setConfirm, responseConfirm, setUpdate }) {
+export default function User({ id, name, initTime, endTime, lineId, setRefresh, refresh, setConfirm, responseConfirm, setUpdate }) {
   const { session } = useSession();
   const { token, userId } = session;
 
@@ -37,11 +37,14 @@ export default function User({ line, id, name, initTime, lineId, setRefresh, ref
         setRefresh(!refresh);
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [responseConfirm]);
 
   return (
     <Wrapper>
-      <Time>{formatTime(initTime)}</Time>
+      <BoxTime>
+        <Time>{formatTime(initTime)}</Time>|<Time>{formatTime(endTime)}</Time>
+      </BoxTime>
       <Name>{formatName(name)}</Name>
       {isUser(id, userId) ? (
         <BoxIcon>
@@ -78,6 +81,11 @@ const Time = styled.p`
   color: black;
   font-weight: bold;
   transform: translateY(2px);
+`;
+
+const BoxTime = styled.div`
+  display: flex;
+  gap: 1px;
 `;
 
 const Shake = keyframes`
