@@ -38,6 +38,7 @@ export default function SignIn() {
         navigate("/dashboard");
       })
       .catch((e) => {
+        console.log(e.response);
         if (e.response.data.errorMessage === "Invalid login") {
           toast.error("Login inválido!");
         } else {

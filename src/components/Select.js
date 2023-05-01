@@ -9,6 +9,7 @@ export default function Select({ value, id, label, hashValues, setValue }) {
 
   useEffect(() => {
     setValue(arrayValues[0].key);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function handleSelect(e) {
