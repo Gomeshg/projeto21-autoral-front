@@ -12,6 +12,7 @@ import { getLines } from "../services/lineAPI";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getDateNow, convertToPtBr } from "../utils/functions";
+import { useNavigate } from "react-router-dom";
 
 import { sortLine } from "../utils/functions";
 
@@ -25,6 +26,7 @@ export default function Dashboard() {
   const [responseConfirm, setResponseConfirm] = useState(false);
   const [refresh, setRefresh] = useState(null);
   const [update, setUpdate] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setDate(getDateNow());
@@ -43,24 +45,34 @@ export default function Dashboard() {
     }
   }, [date, refresh, session.token]);
 
+  function returnToLogin() {
+    navigate("/");
+  }
+
   return (
-    <Screen>
-      <Header />
+    <>
+      {session.token ? (
+        <Screen>
+          <Header />
 
-      <LineContainer>
-        <Head date={date} setDate={setDate} />
-        <Line lines={lines} refresh={refresh} setRefresh={setRefresh} setConfirm={setConfirm} responseConfirm={responseConfirm} setScheduling={setScheduling} setUpdate={setUpdate} />
-        <LineButton setScheduling={setScheduling} />
-      </LineContainer>
+          <LineContainer>
+            <Head date={date} setDate={setDate} />
+            <Line lines={lines} refresh={refresh} setRefresh={setRefresh} setConfirm={setConfirm} responseConfirm={responseConfirm} setScheduling={setScheduling} setUpdate={setUpdate} />
+            <LineButton setScheduling={setScheduling} />
+          </LineContainer>
 
-      <Scheduling scheduling={scheduling} setScheduling={setScheduling} refresh={refresh} setRefresh={setRefresh} dateChosen={date} />
+          <Scheduling scheduling={scheduling} setScheduling={setScheduling} refresh={refresh} setRefresh={setRefresh} dateChosen={date} />
 
-      <Update update={update} setUpdate={setUpdate} refresh={refresh} setRefresh={setRefresh} />
+          <Update update={update} setUpdate={setUpdate} refresh={refresh} setRefresh={setRefresh} />
 
-      <Confirm confirm={confirm} setConfirm={setConfirm} setResponseConfirm={setResponseConfirm}></Confirm>
+          <Confirm confirm={confirm} setConfirm={setConfirm} setResponseConfirm={setResponseConfirm}></Confirm>
 
-      <ToastContainer />
-    </Screen>
+          <ToastContainer />
+        </Screen>
+      ) : (
+        returnToLogin()
+      )}
+    </>
   );
 }
 

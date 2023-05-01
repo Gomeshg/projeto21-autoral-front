@@ -1,10 +1,17 @@
 import styled, { keyframes } from "styled-components";
 import { IoCalendar } from "react-icons/io5";
+import { BsBoxArrowInLeft } from "react-icons/bs";
+import { useSession } from "../services/session";
+
 import { useState } from "react";
 import Date from "./DateTitle";
+import { useNavigate } from "react-router-dom";
 
 export default function Head({ date, setDate }) {
+  const { setSession } = useSession();
+  const navigate = useNavigate();
   const [clickCalendar, setClickCalendar] = useState(false);
+  const [clickLoggout, setClickLoggout] = useState(false);
 
   function handleInput(e) {
     setDate(e.target.value);
@@ -18,10 +25,19 @@ export default function Head({ date, setDate }) {
     }, 1000);
   }
 
+  function loggout() {
+    setClickLoggout(true);
+    setTimeout(() => {
+      setClickLoggout(false);
+      setSession(null);
+      localStorage.removeItem("session");
+      navigate("/");
+    }, 1000);
+  }
+
   return (
     <Wrapper>
-      {/* Div vazia para auxiliar na estilização com grid */}
-      <div></div>
+      <BsBoxArrowInLeft onClick={loggout} className={clickLoggout ? "anima-icon" : ""} size="35px" />
       <Date date={date} />
       <BoxInput>
         <IoCalendar className={clickCalendar ? "anima-icon" : ""} size="35px" />
@@ -30,21 +46,6 @@ export default function Head({ date, setDate }) {
     </Wrapper>
   );
 }
-
-const Wrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr;
-
-  position: relative;
-
-  position: relative;
-  .calendar {
-    position: absolute;
-    right: 0px;
-    top: 0px;
-  }
-`;
 
 const Shake = keyframes`
 
@@ -61,14 +62,29 @@ const Shake = keyframes`
   100% { transform: rotate(0deg); }
 `;
 
-const BoxInput = styled.div`
-  display: flex;
-  justify-content: end;
-  transition: all 0.5s ease-out;
+const Wrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+
+  position: relative;
+
+  position: relative;
+  .calendar {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+  }
 
   .anima-icon {
     animation: ${Shake} 0.8s ease-in-out;
   }
+`;
+
+const BoxInput = styled.div`
+  display: flex;
+  justify-content: end;
+  transition: all 0.5s ease-out;
 `;
 
 const Input = styled.input`
