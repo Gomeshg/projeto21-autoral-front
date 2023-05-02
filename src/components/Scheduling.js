@@ -11,7 +11,7 @@ import { useSession } from "../services/session";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function Scheduling({ scheduling, setScheduling, setRefresh, refresh, dateChosen }) {
+export default function Scheduling({ scheduling, setScheduling, setRefresh, refresh }) {
   const { session } = useSession();
 
   const [stepOne, setStepOne] = useState(false);
@@ -22,11 +22,11 @@ export default function Scheduling({ scheduling, setScheduling, setRefresh, refr
   const [avgDuration, setAvgDuration] = useState("");
 
   useEffect(() => {
-    setDate(dateChosen || getDateNow());
+    setDate(getDateNow());
     setTime(getTimeNow());
     setType("MAQUINA");
     setAvgDuration("sessenta");
-  }, [dateChosen]);
+  }, [scheduling]);
 
   useEffect(() => {
     if (scheduling) {

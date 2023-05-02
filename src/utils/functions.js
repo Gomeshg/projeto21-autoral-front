@@ -59,11 +59,18 @@ export function getTimeNow() {
   return `${hours}:00`;
 }
 
-export function formatTime(date) {
+export function formatTimeToInterface(date) {
   const newDate = new Date(date);
   const hours = String(newDate.getHours());
   const minutes = String(newDate.getMinutes()).padStart(2, "0");
   return minutes === "00" ? `${hours}h` : `${hours}h${minutes}`;
+}
+
+export function formatRealTime(date) {
+  const newDate = new Date(date);
+  const hours = String(newDate.getHours()).padStart(2, "0");
+  const minutes = String(newDate.getMinutes()).padStart(2, "0");
+  return `${hours}:${minutes}`;
 }
 
 export function formatName(name) {
@@ -92,7 +99,7 @@ export function extractDataFromLine(line) {
     avgDuration = "trinta";
   }
 
-  return { date, initTime: formatTime(initTime), avgDuration, type };
+  return { date, initTime: formatRealTime(initTime), avgDuration, type };
 }
 
 export function formatAvgDuration(avgDuration) {

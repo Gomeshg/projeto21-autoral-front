@@ -3,7 +3,7 @@ import { GrUpdate } from "react-icons/gr";
 import { FaTrashAlt } from "react-icons/fa";
 import { useState } from "react";
 import { useSession } from "../services/session";
-import { formatTime, formatName, isUser } from "../utils/functions";
+import { formatTimeToInterface, formatName, isUser } from "../utils/functions";
 import { deleteLine } from "../services/lineAPI";
 import { useEffect } from "react";
 
@@ -43,7 +43,7 @@ export default function User({ id, name, initTime, endTime, lineId, setRefresh, 
   return (
     <Wrapper>
       <BoxTime>
-        <Time>{formatTime(initTime)}</Time>|<Time>{formatTime(endTime)}</Time>
+        <Time>{formatTimeToInterface(initTime)}</Time>|<Time>{formatTimeToInterface(endTime)}</Time>
       </BoxTime>
       <Name>{formatName(name)}</Name>
       {isUser(id, userId) ? (
@@ -62,7 +62,7 @@ const Wrapper = styled.div`
   padding: 0px 20px;
   width: 100%;
   height: 45px;
-  min-height: 25px;
+  min-height: 45px;
   border-radius: 30px;
   background-color: rgba(255, 255, 255, 1);
 

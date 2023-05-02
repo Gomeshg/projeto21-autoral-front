@@ -61,7 +61,7 @@ export default function Dashboard() {
             <LineButton setScheduling={setScheduling} />
           </LineContainer>
 
-          <Scheduling scheduling={scheduling} setScheduling={setScheduling} refresh={refresh} setRefresh={setRefresh} dateChosen={date} />
+          <Scheduling scheduling={scheduling} setScheduling={setScheduling} refresh={refresh} setRefresh={setRefresh} />
 
           <Update update={update} setUpdate={setUpdate} refresh={refresh} setRefresh={setRefresh} />
 

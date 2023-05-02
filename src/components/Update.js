@@ -30,11 +30,12 @@ export default function Update({ update, setUpdate, setRefresh, refresh }) {
         setId(res.id);
         setDate(date);
         setTime(initTime);
+        console.log({ initTime });
         setType(type);
         setAvgDuration(avgDuration);
       });
     }
-  }, [update, session.token]);
+  }, [update]);
 
   useEffect(() => {
     if (update) {
