@@ -66,6 +66,7 @@ const Screen = styled.div`
   justify-content: center;
   align-items: center;
 
+  background-color: red;
   a {
     margin-top: 30px;
   }
